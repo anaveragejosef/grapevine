@@ -1,12 +1,11 @@
 import 'react-native-gesture-handler';
 import React from 'react';
 import { SafeAreaView, StyleSheet, View, Text, Button } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import VarietalButton from './VarietalButton.js';
 
 const WineVarietal = ({ route, navigation }) => {
   let { wineType } = route.params;
-  let varietals = [];
+  let varietals;
   if (wineType === 'red') {
     varietals = ['Cabernet Franc', 'Cabernet Sauvignon', 'Grenache', 'Malbec', 'Merlot', 'Mourvèdre', 'Petite Sirah', 'Petite Verdot', 'Pinot Noir', 'Sangiovese', 'Syrah', 'Red Blend', 'Tempranillo', 'Zinfandel'];
   } else if (wineType === 'white') {
@@ -17,9 +16,7 @@ const WineVarietal = ({ route, navigation }) => {
 
   return (
     <SafeAreaView>
-      <View>
-        <Text>WineVarietal!</Text>
-      </View>
+      {varietals.map((varietal, index) => <VarietalButton type={wineType} varietal={varietal} navigate={navigation.navigate} key={index} />)}
     </SafeAreaView>
   );
 }
