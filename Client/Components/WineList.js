@@ -1,32 +1,38 @@
 import 'react-native-gesture-handler';
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView, StyleSheet, View, Text, Button } from 'react-native';
+import { SafeAreaView } from 'react-native';
 import axios from 'axios';
+import ListEntry from './ListEntry.js';
 
 const WineList = ({ route, navigation }) => {
   const { wineType, wineVarietal } = route.params;
   const [list, setList] = useState([]);
 
   useEffect(() => {
+    let unmounted = false;
+    let source = axios.CancelToken.source();
     axios.get('http://localhost:3000/api/wine-list/all', {
+      cancelToken: source.token,
       params: {
         wineType: wineType,
         varietal: wineVarietal
       }
     })
       .then(response => {
-        console.log('Response: ', response);
+        if (!unmounted) setList(response.data);
       })
       .catch(error => {
-        console.log(`Error on GET request: ${error}`);
+        if (!unmounted) console.log(`Error on GET request: ${error}`);
       });
+    return function () {
+      unmounted = true;
+      source.cancel("Cancelling in cleanup");
+    };
   });
 
   return (
     <SafeAreaView>
-      <View>
-        <Text>WineList!</Text>
-      </View>
+      {list.map(entry => <ListEntry entry={entry} navigate={navigation.navigate} key={entry['_id']} />)}
     </SafeAreaView>
   );
 }
