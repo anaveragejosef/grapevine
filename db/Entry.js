@@ -5,9 +5,13 @@ const wineSchema = new mongoose.Schema({
     type: String,
     maxlength: 100
   },
+  name: {
+    type: String,
+    maxlength: 100
+  },
   wineType: {
     type: String,
-    enum: ['Red', 'White', 'Rose'];
+    enum: ['Red', 'White', 'Rose'],
     maxlength: 5
   },
   varietal: {
@@ -29,28 +33,3 @@ const wineSchema = new mongoose.Schema({
 const Wine = mongoose.model('Wine', wineSchema);
 
 module.exports = Wine;
-
-/*
-Cabernet Franc
-Cabernet Sauvignon
-Grenache
-Malbec
-Merlot
-Mourvèdre
-Petite Sirah
-Petite Verdot
-Pinot Noir
-Sangiovese
-Syrah
-Red Blend
-Tempranillo
-Zinfandel
-Chardonnay
-Sauvignon Blanc
-Pinot Grigio
-Pinot Gris
-Riesling
-Muscat/Moscato
-White Blend
-Pinot Blanc
-*/

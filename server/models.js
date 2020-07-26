@@ -1,15 +1,16 @@
 const Wine = require('../db/Entry.js');
 
-const getAll = (callback) => {
-  Wine.find({}, (err, data) => {
+const getAll = (wineType, varietal, callback) => {
+  Wine.find({wineType: wineType, varietal: varietal}, (err, data) => {
     if (err) callback(err);
     callback(null, data);
   });
 }
 
-const createEntry = (winery, wineType, varietal, vintage, notes, purchaseAgain, callback) => {
+const createEntry = (winery, name, wineType, varietal, vintage, notes, purchaseAgain, callback) => {
   const newBottle = new Wine({
     winery: winery,
+    name: name,
     wineType: wineType,
     varietal: varietal,
     vintage: vintage,
@@ -22,8 +23,8 @@ const createEntry = (winery, wineType, varietal, vintage, notes, purchaseAgain, 
   });
 }
 
-const updateEntry = (id, winery, wineType, varietal, vintage, notes, purchaseAgain, callback) => {
-  Wine.findByIdAndUpdate(id, {winery: winery, wineType: wineType, varietal: varietal, vintage: vintage, notes: notes, purchaseAgain: purchaseAgain} (err, data) => {
+const updateEntry = (id, winery, name, wineType, varietal, vintage, notes, purchaseAgain, callback) => {
+  Wine.findByIdAndUpdate(id, {winery: winery, name: name, wineType: wineType, varietal: varietal, vintage: vintage, notes: notes, purchaseAgain: purchaseAgain}, (err, data) => {
     if (err) callback(err);
     callback(null, data);
   });
