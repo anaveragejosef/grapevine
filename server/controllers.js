@@ -2,7 +2,7 @@ const models = require('./models.js')
 
 const getAll = (req, res) => {
   const { wineType, varietal } = req.query;
-   models.getAll(wineType, varietal, (err, data) => {
+  models.getAll(wineType, varietal, (err, data) => {
     if (err) res.status(400).send(err);
     res.status(200).send(data);
   });
