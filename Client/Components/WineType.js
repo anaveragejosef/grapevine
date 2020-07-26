@@ -10,7 +10,7 @@ const WineType = ({ navigation }) => {
           title='Red'
           onPress={() => {
             navigation.navigate('WineVarietal', {
-              wineType: 'red'
+              wineType: 'Red'
             });
           }}
         />
@@ -18,7 +18,7 @@ const WineType = ({ navigation }) => {
           title='White'
           onPress={() => {
             navigation.navigate('WineVarietal', {
-              wineType: 'white'
+              wineType: 'White'
             });
           }}
         />
@@ -26,7 +26,7 @@ const WineType = ({ navigation }) => {
           title='Rose'
           onPress={() => {
             navigation.navigate('WineVarietal', {
-              wineType: 'rose'
+              wineType: 'Rose'
             });
           }}
         />

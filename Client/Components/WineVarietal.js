@@ -6,9 +6,9 @@ import VarietalButton from './VarietalButton.js';
 const WineVarietal = ({ route, navigation }) => {
   let { wineType } = route.params;
   let varietals;
-  if (wineType === 'red') {
+  if (wineType === 'Red') {
     varietals = ['Cabernet Franc', 'Cabernet Sauvignon', 'Grenache', 'Malbec', 'Merlot', 'Mourvèdre', 'Petite Sirah', 'Petite Verdot', 'Pinot Noir', 'Sangiovese', 'Syrah', 'Red Blend', 'Tempranillo', 'Zinfandel'];
-  } else if (wineType === 'white') {
+  } else if (wineType === 'White') {
     varietals = ['Chardonnay', 'Sauvignon Blanc', 'Pinot Grigio', 'Pinot Gris', 'Riesling', 'Muscat/Moscato', 'White Blend', 'Pinot Blanc'];
   } else {
     varietals = ['Grenache Rosé', 'Sangiovese Rosé', 'Tempranillo Rosé', 'Syrah Rosé', 'Cabernet Sauvignon Rosé', 'Zinfandel Rosé', 'Tavel Rosé', 'Provence Rosé', 'Mourvèdre Rosé', 'Pinot Noir Rosé'];
