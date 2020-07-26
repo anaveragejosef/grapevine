@@ -5,12 +5,12 @@ import { Picker } from '@react-native-community/picker';
 import axios from 'axios';
 
 const WineForm = ({ navigation }) => {
-  const [winery, setWinery] = useState('');
-  const [name, setName] = useState('');
-  const [varietal, setVarietal] = useState('');
-  const [vintage, setVintage] = useState('');
-  const [notes, setNotes] = useState('');
-  const [purchaseAgain, setRepeat] = useState('Yes');
+  let [winery, setWinery] = useState('');
+  let [name, setName] = useState('');
+  let [varietal, setVarietal] = useState('');
+  let [vintage, setVintage] = useState('');
+  let [notes, setNotes] = useState('');
+  let [purchaseAgain, setRepeat] = useState('Yes');
 
   const submitWine = () => {
     if (validateInputs()) {
@@ -43,6 +43,7 @@ const WineForm = ({ navigation }) => {
   }
 
   const fullSend = (type) => {
+    const another = purchaseAgain === 'Yes' ? true : false;
     axios.post('http://localhost:3000/api/wine-list/create', {
         winery: winery,
         name: name,
@@ -50,22 +51,14 @@ const WineForm = ({ navigation }) => {
         varietal: varietal,
         vintage: vintage,
         notes: notes,
-        purchaseAgain: purchaseAgain
+        purchaseAgain: another
       })
       .then(response => {
-        clearEntries();
+        navigation.push('WineForm');
       })
       .catch(error => {
         console.log(`Error when creating entry: ${error}`);
       });
-  }
-
-  const clearEntries = () => {
-    setWinery('');
-    setName('');
-    setVarietal('');
-    setVintage('');
-    setNotes('');
   }
 
   return (
@@ -124,12 +117,13 @@ const WineForm = ({ navigation }) => {
           </Picker>
         </View>
         <View>
-          <Button title='Save' onPress={submitWine()} />
+          <Button
+            title='Submit'
+            onPress={() => submitWine()}
+          />
           <Button
             title='Home'
-            onPress={() => {
-              navigation.navigate('Home');
-            }}
+            onPress={() => navigation.navigate('Home')}
         />
         </View>
       </ScrollView>
