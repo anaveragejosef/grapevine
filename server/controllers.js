@@ -26,7 +26,7 @@ const updateEntry = (req, res) => {
 }
 
 const deleteEntry = (req, res) => {
-  const { id } = req.body;
+  const { id } = req.query;
   models.deleteEntry(id, (err, data) => {
     if (err) res.status(400).send(err);
     res.status(204).end();

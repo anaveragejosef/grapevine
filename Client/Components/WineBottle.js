@@ -3,6 +3,7 @@ import React from 'react';
 import { SafeAreaView, View, Text, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import axios from 'axios';
 
 const WineBottle = ({ route, navigation }) => {
   const { entry } = route.params;
@@ -12,6 +13,22 @@ const WineBottle = ({ route, navigation }) => {
     }
     return <Text>Get Again: No</Text>;
   };
+
+  const deleteRecord = (id) => {
+    axios.delete('http://localhost:3000/api/wine-list/remove', {
+        params: {
+          id: id
+        }
+      })
+      .then(response => {
+        navigation.navigate('WineList', {
+          wineType: entry.wineType,
+          wineVarietal: entry.varietal
+        });
+      })
+      .catch(err => console.log(`Error on deletion request: ${err}`));
+  }
+
   return (
     <SafeAreaView>
       <View>
@@ -26,6 +43,22 @@ const WineBottle = ({ route, navigation }) => {
           title='Home'
           onPress={() => {
             navigation.navigate('Home');
+          }}
+        />
+      </View>
+      <View>
+        <Button
+          title='Delete Record'
+          onPress={() => {
+            deleteRecord(entry['_id']);
+          }}
+        />
+      </View>
+      <View>
+        <Button
+          title='Edit Record'
+          onPress={() => {
+            console.log('Edit me');
           }}
         />
       </View>
