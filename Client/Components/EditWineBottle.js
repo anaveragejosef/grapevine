@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 import React, { useState } from 'react';
-import { SafeAreaView, View, Text, TextInput, Button } from 'react-native';
+import { SafeAreaView, ScrollView, StyleSheet, View, Text, TextInput, Button } from 'react-native';
 import { Picker } from '@react-native-community/picker';
 import axios from 'axios';
 
@@ -44,7 +44,7 @@ const EditWineBottle = ({ route, navigation }) => {
   }
 
   const updateRecord = (type) => {
-    const another = purchaseAgain === 'Yes' ? true : false;
+    const another = purchaseAgain === 'true' ? true : false;
     axios.put('http://localhost:3000/api/wine-list/update', {
         id: entry['_id'],
         winery: winery,
@@ -66,79 +66,138 @@ const EditWineBottle = ({ route, navigation }) => {
   }
 
   return (
-    <SafeAreaView>
-      <View>
-        <Text>Winery - </Text>
-        <TextInput
-          onChangeText={newWinery => setWinery(newWinery)}
-          value={winery}
-          maxLength={100}
-        />
-      </View>
-      <View>
-        <Text>Name - </Text>
-        <TextInput
-          onChangeText={newName => setName(newName)}
-          value={name}
-          maxLength={100}
-        />
-      </View>
-      <View>
-        <Text>Varietal - </Text>
-        <TextInput
-          onChangeText={newVarietal => setVarietal(newVarietal)}
-          value={varietal}
-          maxLength={20}
-        />
-      </View>
-      <View>
-        <Text>Vintage - </Text>
-        <TextInput
-          onChangeText={newVintage => setVintage(newVintage)}
-          value={vintage}
-          keyboardType={'numeric'}
-          maxLength={4}
-        />
-      </View>
-      <View>
-        <Text>Notes - </Text>
-        <TextInput
-          onChangeText={newNotes => setNotes(newNotes)}
-          value={notes}
-          maxLength={280}
-          multiline={true}
-        />
-      </View>
-      <View>
-        <Text>Buy Again - </Text>
-        <Picker
-          selectedValue={purchaseAgain}
-          onValueChange={currentRepeat => setRepeat(currentRepeat)}
-        >
-          <Picker.Item label='Yes' value='true' />
-          <Picker.Item label='No' value='false' />
-        </Picker>
-      </View>
-      <View>
-        <Button
-          title='Save Changes'
-          onPress={() => {
-            updateWine();
-          }}
-        />
-      </View>
-      <View>
-        <Button
-          title='Cancel'
-          onPress={() => {
-            navigation.navigate('WineBottle', {
-              entry: entry
-            });
-          }}
-        />
-      </View>
+    <SafeAreaView style={styles.container}>
+      <ScrollView>
+        <View>
+          <Text style={styles.textStyle}>Winery: </Text>
+          <TextInput
+            onChangeText={newWinery => setWinery(newWinery)}
+            value={winery}
+            maxLength={100}
+            style={styles.inputStyle}
+          />
+        </View>
+        <View>
+          <Text style={styles.textStyle}>Name: </Text>
+          <TextInput
+            onChangeText={newName => setName(newName)}
+            value={name}
+            maxLength={100}
+            style={styles.inputStyle}
+          />
+        </View>
+        <View>
+          <Text style={styles.textStyle}>Varietal: </Text>
+          <TextInput
+            onChangeText={newVarietal => setVarietal(newVarietal)}
+            value={varietal}
+            maxLength={20}
+            style={styles.inputStyle}
+          />
+        </View>
+        <View>
+          <Text style={styles.textStyle}>Vintage: </Text>
+          <TextInput
+            onChangeText={newVintage => setVintage(newVintage)}
+            value={vintage}
+            keyboardType={'numeric'}
+            maxLength={4}
+            style={styles.inputStyle}
+          />
+        </View>
+        <View>
+          <Text style={styles.textStyle}>Notes: </Text>
+          <TextInput
+            onChangeText={newNotes => setNotes(newNotes)}
+            value={notes}
+            maxLength={280}
+            multiline={true}
+            style={styles.inputStyle}
+          />
+        </View>
+        <View>
+          <Text style={styles.textStyle}>Get Again?</Text>
+          <Picker
+            selectedValue={purchaseAgain}
+            onValueChange={currentRepeat => setRepeat(currentRepeat)}
+            style={styles.outerPicker}
+            itemStyle={styles.innerPicker}
+          >
+            <Picker.Item label='Yes' value='true' />
+            <Picker.Item label='No' value='false' />
+          </Picker>
+        </View>
+        <View style={styles.buttonContainer}>
+          <View style={styles.buttonStyle}>
+            <Button
+              title='Save Changes'
+              onPress={() => {
+                updateWine();
+              }}
+              color='#E63946'
+            />
+          </View>
+          <View style={styles.buttonStyle}>
+            <Button
+              title='Cancel'
+              color='#E63946'
+              onPress={() => {
+                navigation.navigate('WineBottle', {
+                  entry: entry
+                });
+              }}
+            />
+          </View>
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 20
+  },
+  textStyle: {
+    fontFamily: 'Helvetica'
+  },
+  inputStyle: {
+    width: '95%',
+    borderColor: '#E63946',
+    backgroundColor: '#FFF',
+    borderWidth: 1,
+    borderStyle: 'solid',
+    padding: 20,
+    margin: 10,
+    fontFamily: 'Helvetica'
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    margin: 20,
+  },
+  buttonStyle: {
+    textAlign: 'center',
+    borderColor: '#E63946',
+    backgroundColor: '#FFF',
+    borderWidth: 1,
+    borderStyle: 'solid',
+    margin: 5
+  },
+  outerPicker: {
+    margin: 10,
+    height: 88,
+    borderColor: '#E63946',
+    backgroundColor: '#FFF',
+    borderWidth: 1,
+    borderStyle: 'solid',
+  },
+  innerPicker: {
+    height: 88
+  }
+});
 
 export default EditWineBottle;
