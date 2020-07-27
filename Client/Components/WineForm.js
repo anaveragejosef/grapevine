@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 import React, { useState } from 'react';
-import { SafeAreaView, ScrollView, View, TextInput, Text, Button } from 'react-native';
+import { SafeAreaView, ScrollView, StyleSheet, View, TextInput, Text, Button } from 'react-native';
 import { Picker } from '@react-native-community/picker';
 import axios from 'axios';
 
@@ -62,73 +62,132 @@ const WineForm = ({ navigation }) => {
   }
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.container}>
       <ScrollView>
         <View>
-          <Text>Where's it from?</Text>
+          <Text style={styles.textStyle}>Where's it from?</Text>
           <TextInput
             onChangeText={newWinery => setWinery(newWinery)}
             placeholder='Winery'
             maxLength={100}
+            style={styles.inputStyle}
           />
         </View>
         <View>
-          <Text>What's it called?</Text>
+          <Text style={styles.textStyle}>What's it called?</Text>
           <TextInput
             onChangeText={newName => setName(newName)}
             placeholder='Name'
             maxLength={100}
+            style={styles.inputStyle}
           />
         </View>
         <View>
-          <Text>Which varietal?</Text>
+          <Text style={styles.textStyle}>Which varietal?</Text>
           <TextInput
             onChangeText={newVarietal => setVarietal(newVarietal)}
             placeholder='Varietal'
             maxLength={20}
+            style={styles.inputStyle}
           />
         </View>
         <View>
-          <Text>Which year?</Text>
+          <Text style={styles.textStyle}>Which year?</Text>
           <TextInput
             onChangeText={newVintage => setVintage(newVintage)}
             placeholder='Vintage'
             keyboardType={'numeric'}
             maxLength={4}
+            style={styles.inputStyle}
           />
         </View>
         <View>
-          <Text>Thoughts?</Text>
+          <Text style={styles.textStyle}>Thoughts?</Text>
           <TextInput
             onChangeText={newNotes => setNotes(newNotes)}
             placeholder='Notes'
             maxLength={280}
             multiline={true}
+            style={styles.inputStyle}
           />
         </View>
         <View>
-          <Text>Buy Again?</Text>
+          <Text style={styles.textStyle}>Buy Again?</Text>
           <Picker
             selectedValue={purchaseAgain}
             onValueChange={currentRepeat => setRepeat(currentRepeat)}
+            style={styles.outerPicker}
+            itemStyle={styles.innerPicker}
           >
             <Picker.Item label='Yes' value='true' />
             <Picker.Item label='No' value='false' />
           </Picker>
         </View>
-        <View>
-          <Button
-            title='Submit'
-            onPress={() => submitWine()}
-          />
-          <Button
-            title='Home'
-            onPress={() => navigation.navigate('Home')}
-        />
+        <View style={styles.buttonContainer}>
+          <View style={styles.buttonStyle}>
+            <Button
+              title='Submit'
+              color='#E63946'
+              onPress={() => submitWine()}
+            />
+          </View>
+          <View style={styles.buttonStyle}>
+            <Button
+              title='Home'
+              color='#E63946'
+              onPress={() => navigation.navigate('Home')}
+            />
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 20
+  },
+  textStyle: {
+    fontFamily: 'Helvetica'
+  },
+  inputStyle: {
+    width: '95%',
+    borderColor: '#E63946',
+    backgroundColor: '#FFF',
+    borderWidth: 1,
+    borderStyle: 'solid',
+    padding: 20,
+    margin: 10,
+    fontFamily: 'Helvetica'
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    margin: 20,
+  },
+  buttonStyle: {
+    textAlign: 'center',
+    borderColor: '#E63946',
+    backgroundColor: '#FFF',
+    borderWidth: 1,
+    borderStyle: 'solid',
+    margin: 5
+  },
+  outerPicker: {
+    margin: 10,
+    height: 88,
+    borderColor: '#E63946',
+    backgroundColor: '#FFF',
+    borderWidth: 1,
+    borderStyle: 'solid',
+  },
+  innerPicker: {
+    height: 88
+  }
+});
 
 export default WineForm;
