@@ -11,12 +11,13 @@ const ListEntry = ({ entry, navigate }) => {
   };
 
   return (
-    <View>
+    <View style={styles.wrapper}>
       <Text>Winery: {entry.winery}</Text>
       <Text>Name: {entry.name}</Text>
       {truthChecker()}
       <Button
         title='See More'
+        color='#E63946'
         onPress={() => {
           navigate('WineBottle', {
             entry: entry
@@ -26,5 +27,18 @@ const ListEntry = ({ entry, navigate }) => {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  wrapper: {
+    width: 'auto',
+    borderColor: '#E63946',
+    backgroundColor: '#FFF',
+    borderWidth: 1,
+    borderStyle: 'solid',
+    padding: 20,
+    margin: 10,
+    fontFamily: 'Helvetica'
+  }
+});
 
 export default ListEntry;
