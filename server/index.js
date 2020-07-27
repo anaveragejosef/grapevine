@@ -1,6 +1,8 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
+const multer = require('multer');
+let upload = multer({ dest: 'uploads/' })
 const controllers = require('./controllers.js');
 const db = require('../db/index.js');
 
@@ -16,5 +18,10 @@ app.listen(port, () => {
 
 app.get('/api/wine-list/all', controllers.getAll);
 app.post('/api/wine-list/create', controllers.createEntry);
+app.post('/api/upload-image', upload.single('photo'), (req, res) => {
+  console.log('server');
+  console.log('Req.file = ', req.file);
+  console.log('Req.body = ', req.body);
+})
 app.put('/api/wine-list/update', controllers.updateEntry);
 app.delete('/api/wine-list/remove', controllers.deleteEntry);
