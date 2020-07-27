@@ -30,7 +30,7 @@ const ListEntry = ({ entry, navigate }) => {
 
 const styles = StyleSheet.create({
   wrapper: {
-    width: '95%',
+    width: 'auto',
     borderColor: '#E63946',
     backgroundColor: '#FFF',
     borderWidth: 1,
