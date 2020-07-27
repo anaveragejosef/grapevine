@@ -1,8 +1,6 @@
 import 'react-native-gesture-handler';
 import React from 'react';
 import { SafeAreaView, View, Text, Button } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
 import axios from 'axios';
 
 const WineBottle = ({ route, navigation }) => {
@@ -58,7 +56,9 @@ const WineBottle = ({ route, navigation }) => {
         <Button
           title='Edit Record'
           onPress={() => {
-            console.log('Edit me');
+            navigation.navigate('EditWineBottle', {
+              entry: entry
+            });
           }}
         />
       </View>
