@@ -17,8 +17,7 @@ const createEntry = (req, res) => {
 }
 
 const updateEntry = (req, res) => {
-  const { id } = req.body;
-  const { winery, name, wineType, varietal, vintage, notes, purchaseAgain } = req.body;
+  const { id, winery, name, wineType, varietal, vintage, notes, purchaseAgain } = req.body;
   models.updateEntry(id, winery, name, wineType, varietal, vintage, notes, purchaseAgain, (err, data) => {
     if (err) res.status(400).send(err);
     res.status(204).end();
