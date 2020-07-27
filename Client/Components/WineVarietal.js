@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 import React from 'react';
-import { SafeAreaView, StyleSheet, View, Text, Button } from 'react-native';
+import { SafeAreaView, StyleSheet, ScrollView, View, Text, Button } from 'react-native';
 import VarietalButton from './VarietalButton.js';
 
 const WineVarietal = ({ route, navigation }) => {
@@ -15,10 +15,21 @@ const WineVarietal = ({ route, navigation }) => {
   }
 
   return (
-    <SafeAreaView>
-      {varietals.map((varietal, index) => <VarietalButton type={wineType} varietal={varietal} navigate={navigation.navigate} key={index} />)}
+    <SafeAreaView style={styles.container}>
+      <ScrollView>
+        {varietals.map((varietal, index) => <VarietalButton type={wineType} varietal={varietal} navigate={navigation.navigate} key={index} />)}
+      </ScrollView>
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    margin: 20,
+  }
+});
 
 export default WineVarietal;

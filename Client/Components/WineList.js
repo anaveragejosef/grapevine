@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView } from 'react-native';
+import { SafeAreaView, StyleSheet, ScrollView } from 'react-native';
 import axios from 'axios';
 import ListEntry from './ListEntry.js';
 
@@ -26,15 +26,26 @@ const WineList = ({ route, navigation }) => {
       });
     return function () {
       unmounted = true;
-      source.cancel("Cancelling in cleanup");
+      source.cancel("Cleanup");
     };
   });
 
   return (
-    <SafeAreaView>
-      {list.map(entry => <ListEntry entry={entry} navigate={navigation.navigate} key={entry['_id']} />)}
+    <SafeAreaView style={styles.container}>
+      <ScrollView>
+        {list.map(entry => <ListEntry entry={entry} navigate={navigation.navigate} key={entry['_id']} />)}
+      </ScrollView>
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    margin: 20,
+  }
+});
 
 export default WineList;
