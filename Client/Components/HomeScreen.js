@@ -19,13 +19,6 @@ const HomeScreen = ({ navigation }) => {
           onPress={() => navigation.navigate('WineType')}
         />
       </View>
-      <View style={styles.button}>
-        <Button
-          color='#FFFFFF'
-          title='Camera Test'
-          onPress={() => navigation.navigate('CameraTest')}
-        />
-      </View>
     </SafeAreaView>
   );
 }

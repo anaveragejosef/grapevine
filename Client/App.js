@@ -9,7 +9,6 @@ import WineList from './Components/WineList.js';
 import WineBottle from './Components/WineBottle.js';
 import EditWineBottle from './Components/EditWineBottle.js';
 import WineForm from './Components/WineForm.js';
-import CameraTest from './Components/CameraTest.js';
 
 const Stack = createStackNavigator();
 
@@ -62,11 +61,6 @@ const App = () => {
         <Stack.Screen
           name="EditWineBottle"
           component={EditWineBottle}
-          options={{ title: 'Edit Wine Review' }}
-        />
-        <Stack.Screen
-          name="CameraTest"
-          component={CameraTest}
           options={{ title: 'Edit Wine Review' }}
         />
       </Stack.Navigator>
