@@ -5,7 +5,7 @@ import { StyleSheet, Text, View, TouchableOpacity, Button, Image } from 'react-n
 import axios from 'axios';
 
 const Camera = ({ sendUrl }) => {
-  const [resourcePath, setPath] = useState({});
+  const [resourcePath, setPath] = useState(null);
 
   const selectFile = () => {
     var options = {
@@ -30,6 +30,18 @@ const Camera = ({ sendUrl }) => {
     });
   };
 
+  const imageChecker = () => {
+    if (resourcePath === null) {
+      return;
+    }
+    return (
+      <Image
+        source={{ uri: resourcePath.uri }}
+        style={{ width: 200, height: 200 }}
+      />
+    )
+  }
+
   const uploadFile = () => {
     let form = new FormData();
     const uriArr = resourcePath.uri.split('/');
@@ -51,10 +63,7 @@ const Camera = ({ sendUrl }) => {
 
   return (
     <View style={styles.container}>
-      <Image
-        source={{ uri: resourcePath.uri }}
-        style={{ width: 200, height: 200 }}
-      />
+      {imageChecker()}
       <View style={styles.buttonContainer}>
         <View style={styles.buttonStyle}>
             <Button
