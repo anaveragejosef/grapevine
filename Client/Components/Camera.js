@@ -4,9 +4,8 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Button, Image } from 'react-native';
 import axios from 'axios';
 
-const CameraTest = () => {
+const Camera = ({ sendUrl }) => {
   const [resourcePath, setPath] = useState({});
-  const [s3Url, setUrl] = useState('');
 
   const selectFile = () => {
     var options = {
@@ -46,7 +45,7 @@ const CameraTest = () => {
       }
     };
     axios.post('http://localhost:3000/api/upload-image', form, config)
-      .then(response => setUrl(response.data.Location))
+      .then(response => sendUrl(response.data.Location))
       .catch(error => console.log('Error ', error));
   }
 
@@ -60,14 +59,14 @@ const CameraTest = () => {
         <View style={styles.buttonStyle}>
             <Button
               title='Add an Image'
-              color='#FFFFFF'
+              color='#E63946'
               onPress={() => selectFile()}
             />
         </View>
         <View style={styles.buttonStyle}>
             <Button
               title='Save Image'
-              color='#FFFFFF'
+              color='#E63946'
               onPress={() => uploadFile()}
             />
         </View>
@@ -85,7 +84,8 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: 'row',
-    margin: 20,
+    justifyContent: 'center',
+    margin: 20
   },
   buttonStyle: {
     textAlign: 'center',
@@ -97,4 +97,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CameraTest;
+export default Camera;

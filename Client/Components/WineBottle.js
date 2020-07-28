@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 import React from 'react';
-import { SafeAreaView, StyleSheet, View, Text, Button } from 'react-native';
+import { SafeAreaView, StyleSheet, View, Text, Button, Image } from 'react-native';
 import axios from 'axios';
 
 const WineBottle = ({ route, navigation }) => {
@@ -29,6 +29,10 @@ const WineBottle = ({ route, navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <Image
+        source={{ uri: entry.wineImage }}
+        style={{ width: 200, height: 200 }}
+      />
       <View style={styles.textWrapper}>
         <Text>Winery: {entry.winery}</Text>
         <Text>Name: {entry.name}, {entry.vintage}</Text>
