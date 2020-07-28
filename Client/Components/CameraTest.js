@@ -6,6 +6,7 @@ import axios from 'axios';
 
 const CameraTest = () => {
   const [resourcePath, setPath] = useState({});
+  const [s3Url, setUrl] = useState('');
 
   const selectFile = () => {
     var options = {
@@ -32,29 +33,21 @@ const CameraTest = () => {
 
   const uploadFile = () => {
     let form = new FormData();
+    const uriArr = resourcePath.uri.split('/');
     const cleanURL = resourcePath.uri.replace("file://", "");
-    console.log(cleanURL);
-    form.append('name', 'photo');
     form.append('photo', {
       uri: cleanURL,
       type: resourcePath.type,
-      name: resourcePath.fileName,
-      data: resourcePath.data
+      name: uriArr[uriArr.length - 1],
     });
     let config = {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
     };
-    setTimeout(() => {
-      axios.post('http://localhost:3000/api/upload-image', form, config)
-        .then(response => response.json())
-        .then(responseJSON => {
-          console.log('responseJson - ', responseJson);
-          return responseJson;
-        })
-        .catch(error => console.log('Error ', error));
-    }, 1500)
+    axios.post('http://localhost:3000/api/upload-image', form, config)
+      .then(response => setUrl(response.data.Location))
+      .catch(error => console.log('Error ', error));
   }
 
   return (
@@ -63,19 +56,21 @@ const CameraTest = () => {
         source={{ uri: resourcePath.uri }}
         style={{ width: 200, height: 200 }}
       />
-      <View style={styles.button}>
-          <Button
-            title='Add an Image'
-            color='#FFFFFF'
-            onPress={() => selectFile()}
-          />
-      </View>
-      <View style={styles.button}>
-          <Button
-            title='Save Image'
-            color='#FFFFFF'
-            onPress={() => uploadFile()}
-          />
+      <View style={styles.buttonContainer}>
+        <View style={styles.buttonStyle}>
+            <Button
+              title='Add an Image'
+              color='#FFFFFF'
+              onPress={() => selectFile()}
+            />
+        </View>
+        <View style={styles.buttonStyle}>
+            <Button
+              title='Save Image'
+              color='#FFFFFF'
+              onPress={() => uploadFile()}
+            />
+        </View>
       </View>
     </View>
   );
@@ -88,15 +83,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  button: {
-    width: '50%',
+  buttonContainer: {
+    flexDirection: 'row',
+    margin: 20,
+  },
+  buttonStyle: {
+    textAlign: 'center',
     borderColor: '#E63946',
-    backgroundColor: '#E63946',
+    backgroundColor: '#FFF',
     borderWidth: 1,
     borderStyle: 'solid',
-    padding: 20,
-    margin: 10,
-  }
+    margin: 5
+  },
 });
 
 export default CameraTest;
