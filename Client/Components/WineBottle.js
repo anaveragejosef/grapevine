@@ -13,7 +13,7 @@ const WineBottle = ({ route, navigation }) => {
   };
 
   const imageChecker = () => {
-    if (entry.wineImage === '') {
+    if (entry.wineImage === '' || entry.wineImage === undefined) {
       return;
     }
     return (
@@ -74,7 +74,11 @@ const WineBottle = ({ route, navigation }) => {
             title='Delete Record'
             color='#E63946'
             onPress={() => {
-              deleteRecord(entry['_id']);
+              if (entry['_id']) {
+                deleteRecord(entry['_id']);
+              } else {
+                deleteRecord(entry['id']);
+              }
             }}
           />
         </View>
