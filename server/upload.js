@@ -14,7 +14,7 @@ const uploadFile = (fileName) => {
     Bucket: config.BUCKET_NAME,
     Body: fileContent,
     Key: fileArr[fileArr.length - 1],
-    ContentType: "image/jpg"
+    ContentType: "image/jpeg"
   };
   console.log('before upload');
   s3.upload(params, function(err, data) {

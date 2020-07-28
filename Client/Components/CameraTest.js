@@ -31,19 +31,30 @@ const CameraTest = () => {
   };
 
   const uploadFile = () => {
-    let data = new FormData();
-    console.log(resourcePath.uri);
-    /*data.append('photo', {
-      uri: resourcePath.uri,
-      type: resourcePath.uri.split('.')[1],
-      name: resourcePath.uri.split('.')[1]
-    });*/
-    data.append('photo', resourcePath.uri);
-    data.append('photo', resourcePath.uri.split('.')[1]);
-    data.append('photo', resourcePath.uri.split('.')[1]);
-    axios.post('http://localhost:3000/api/upload-image', data)
-      .then(response => console.log('Success!'))
-      .catch(error => console.log('Error ', error));
+    let form = new FormData();
+    const cleanURL = resourcePath.uri.replace("file://", "");
+    console.log(cleanURL);
+    form.append('name', 'photo');
+    form.append('photo', {
+      uri: cleanURL,
+      type: resourcePath.type,
+      name: resourcePath.fileName,
+      data: resourcePath.data
+    });
+    let config = {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    };
+    setTimeout(() => {
+      axios.post('http://localhost:3000/api/upload-image', form, config)
+        .then(response => response.json())
+        .then(responseJSON => {
+          console.log('responseJson - ', responseJson);
+          return responseJson;
+        })
+        .catch(error => console.log('Error ', error));
+    }, 1500)
   }
 
   return (
