@@ -27,7 +27,8 @@ const wineSchema = new mongoose.Schema({
     type: String,
     maxlength: 280
   },
-  purchaseAgain: Boolean
+  purchaseAgain: Boolean,
+  wineImage: String
 });
 
 const Wine = mongoose.model('Wine', wineSchema);

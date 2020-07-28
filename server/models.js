@@ -7,7 +7,7 @@ const getAll = (wineType, varietal, callback) => {
   });
 }
 
-const createEntry = (winery, name, wineType, varietal, vintage, notes, purchaseAgain, callback) => {
+const createEntry = (winery, name, wineType, varietal, vintage, notes, purchaseAgain, wineImage, callback) => {
   const newBottle = new Wine({
     winery: winery,
     name: name,
@@ -15,7 +15,8 @@ const createEntry = (winery, name, wineType, varietal, vintage, notes, purchaseA
     varietal: varietal,
     vintage: vintage,
     notes: notes,
-    purchaseAgain: purchaseAgain
+    purchaseAgain: purchaseAgain,
+    wineImage: wineImage
   });
   newBottle.save((err, data) => {
     if (err) callback(err);

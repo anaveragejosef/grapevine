@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { SafeAreaView, ScrollView, StyleSheet, View, TextInput, Text, Button } from 'react-native';
 import { Picker } from '@react-native-community/picker';
 import axios from 'axios';
+import Camera from './Camera.js';
 
 const WineForm = ({ navigation }) => {
   let [winery, setWinery] = useState('');
@@ -11,6 +12,7 @@ const WineForm = ({ navigation }) => {
   let [vintage, setVintage] = useState('');
   let [notes, setNotes] = useState('');
   let [purchaseAgain, setRepeat] = useState('Yes');
+  let [wineImage, setImage] = useState('');
 
   const submitWine = () => {
     if (validateInputs()) {
@@ -42,6 +44,10 @@ const WineForm = ({ navigation }) => {
     }
   }
 
+  const sendUrl = (s3Url) => {
+    setImage(s3Url);
+  }
+
   const fullSend = (type) => {
     const another = purchaseAgain === 'Yes' ? true : false;
     axios.post('http://localhost:3000/api/wine-list/create', {
@@ -51,7 +57,8 @@ const WineForm = ({ navigation }) => {
         varietal: varietal,
         vintage: vintage,
         notes: notes,
-        purchaseAgain: another
+        purchaseAgain: another,
+        wineImage: wineImage
       })
       .then(response => {
         navigation.push('WineForm');
@@ -123,6 +130,9 @@ const WineForm = ({ navigation }) => {
             <Picker.Item label='No' value='false' />
           </Picker>
         </View>
+        <View>
+          <Camera sendUrl={sendUrl}/>
+        </View>
         <View style={styles.buttonContainer}>
           <View style={styles.buttonStyle}>
             <Button
@@ -168,6 +178,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: 'row',
     margin: 20,
+    justifyContent: 'center'
   },
   buttonStyle: {
     textAlign: 'center',

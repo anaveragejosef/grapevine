@@ -9,8 +9,8 @@ const getAll = (req, res) => {
 }
 
 const createEntry = (req, res) => {
-  const { winery, name, wineType, varietal, vintage, notes, purchaseAgain } = req.body;
-  models.createEntry(winery, name, wineType, varietal, vintage, notes, purchaseAgain, (err, data) => {
+  const { winery, name, wineType, varietal, vintage, notes, purchaseAgain, wineImage } = req.body;
+  models.createEntry(winery, name, wineType, varietal, vintage, notes, purchaseAgain, wineImage, (err, data) => {
     if (err) res.status(400).send(err);
     res.status(201).end();
   });

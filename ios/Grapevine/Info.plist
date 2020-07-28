@@ -53,5 +53,11 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSPhotoLibraryUsageDescription</key>
+  <string>Grapevine would like access to your photo gallery</string>
+  <key>NSCameraUsageDescription</key>
+  <string>Yeah, if you could give me access to your camera, that'd be great</string>
+  <key>NSPhotoLibraryAddUsageDescription</key>
+  <string>Pick an existing photo</string>
 </dict>
 </plist>
