@@ -1,34 +1,20 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
-// const multer = require('multer');
-// const upload = multer({dest: 'uploads/'});
+const multer = require('multer');
 const controllers = require('./controllers.js');
 const db = require('../db/index.js');
+const s3Uploader = require('./upload.js');
 
 const app = express();
 const port = 3000;
-
-app.use(bodyParser.json({limit: '50mb', extended: true}));
-app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
-
-var multipart = require('connect-multiparty');
-var multipartMiddleware = multipart();
-app.post('/api/upload-image', multipartMiddleware, function(req, resp) {
-  console.log(req.file);
-});
-
-/* const Storage = multer.diskStorage({
-  destination(req, file, callback) {
-    callback(null, 'uploads/')
-  },
-  filename(req, file, callback) {
-    callback(null, `${file.fieldname}_${Date.now()}_${file.originalname}`)
-  },
+const upload = multer({
+  dest: __dirname + '/uploads/',
+  limits: { fieldSize: 25 * 1024 * 1024 }
 })
-const upload = multer({ storage: Storage })
-*/
 
+app.use(bodyParser.json({extended: true}));
+app.use(bodyParser.urlencoded({extended: true}));
 
 app.listen(port, () => {
   console.log(`Now listening on port ${port}`);
@@ -36,10 +22,9 @@ app.listen(port, () => {
 
 app.get('/api/wine-list/all', controllers.getAll);
 app.post('/api/wine-list/create', controllers.createEntry);
-/* app.post('/api/upload-image', upload.single('photo'), (req, res) => {
-  //console.log('Req = ', req);
-  console.log('Req.file = ', req.file);
-  console.log('Req.body = ', req.body);
-}); */
+app.post('/api/upload-image', upload.single('photo'), (req, res) => {
+  let filePath = __dirname + '/uploads/' + req.file.filename;
+  let s3URL = s3Uploader.uploadFile(filePath, res);
+});
 app.put('/api/wine-list/update', controllers.updateEntry);
 app.delete('/api/wine-list/remove', controllers.deleteEntry);

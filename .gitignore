@@ -59,4 +59,4 @@ buck-out/
 /ios/Pods/
 
 /server/config.js
-/uploads
+/server/uploads

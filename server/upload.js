@@ -7,7 +7,7 @@ const s3 = new AWS.S3({
   secretAccessKey: config.SECRET_KEY
 });
 
-const uploadFile = (fileName) => {
+const uploadFile = (fileName, res) => {
   const fileContent = fs.readFileSync(fileName);
   const fileArr = fileName.split('/');
   const params = {
@@ -19,13 +19,11 @@ const uploadFile = (fileName) => {
   console.log('before upload');
   s3.upload(params, function(err, data) {
     if (err) {
-      console.log(`Error uploading file to S3 - ${err}`);
+      res.status(400).send(err);
     }
     console.log(`File uploaded successfully - ${data.Location}`);
-    return data.Location;
+    res.status(201).send(data);
   });
 };
-
-uploadFile('/Users/josef/Documents/HackReactor/HRSF128/Grapevine/uploads/test.jpg');
 
 module.exports = { uploadFile };
