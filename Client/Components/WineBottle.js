@@ -12,6 +12,17 @@ const WineBottle = ({ route, navigation }) => {
     return <Text>Get Again: No</Text>;
   };
 
+  const imageChecker = () => {
+    if (entry.wineImage === '') {
+      return;
+    }
+    return (
+      <Image
+        source={{ uri: entry.wineImage }}
+        style={{ width: 200, height: 200 }}
+      />
+    )
+  }
   const deleteRecord = (id) => {
     axios.delete('http://localhost:3000/api/wine-list/remove', {
         params: {
@@ -29,10 +40,7 @@ const WineBottle = ({ route, navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Image
-        source={{ uri: entry.wineImage }}
-        style={{ width: 200, height: 200 }}
-      />
+      {imageChecker()}
       <View style={styles.textWrapper}>
         <Text>Winery: {entry.winery}</Text>
         <Text>Name: {entry.name}, {entry.vintage}</Text>
