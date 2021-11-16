@@ -14,7 +14,7 @@
     "@react-native-community/picker": "^1.6.5",
     "@react-navigation/native": "^5.7.1",
     "@react-navigation/stack": "^5.7.1",
-    "aws-sdk": "^2.721.0",
+    "aws-sdk": "^2.814.0",
     "axios": "^0.19.2",
     "body-parser": "^1.19.0",
     "connect-multiparty": "^2.2.0",
